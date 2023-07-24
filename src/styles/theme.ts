@@ -36,12 +36,22 @@ const fontSize = {
   smallestText: 12,
 };
 
+const fontSizeRem = {
+  mainTitle: `1.75rem`,
+  title: '1.5rem',
+  subTitle: '1.125rem',
+  bodyText: '1rem',
+  details: '.875rem',
+  smallestText: '.75remx',
+};
+
 export type ColorsTypes = typeof colors;
 export type FontSizeTypes = typeof fontSize;
 
 export const theme: DefaultTheme = {
   colors,
   fontSize,
+  fontSizeRem,
 };
 
 export default theme;
