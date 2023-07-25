@@ -1,4 +1,5 @@
 import x from '@assets/icon/x.svg';
+import theme from '@styles/theme';
 import { Dispatch, FC, SetStateAction, memo, useCallback } from 'react';
 import { css, keyframes, styled } from 'styled-components';
 
@@ -63,7 +64,7 @@ const S = {
     top: 0;
     width: 100%;
     height: 100%;
-    background: ${({ theme }) => `rgba(${theme.colors.Dim}, 0.5)`};
+    background: ${`rgba(${theme.colors.Dim}, 0.5)`};
     animation: ${fadeIn} 0.5s;
     transition: opacity 0.5s;
   `,
@@ -71,7 +72,7 @@ const S = {
   ModalContent: styled.div`
     position: relative;
     background: white;
-    border: 1px solid ${({ theme }) => theme.colors.gray[600]};
+    border: 1px solid ${theme.colors.gray[600]};
     max-height: 100%;
     width: 100%;
     max-width: 28rem;
@@ -81,59 +82,53 @@ const S = {
   `,
 
   ModalInnerContent: styled.div`
-    ${({ theme }) => {
-      const { colors, fontSize_ } = theme;
-      return `
-      h3 {
-        margin-bottom: 1rem;
-        font-size: ${fontSize_[18]};
-        font-weight: 800;
-        color : ${colors.gray[50]}
-      }
-      p {
-        color: ${colors.gray[50]};
-        white-space: pre-wrap;
-        margin-bottom: 1.5rem;
-        font-size: ${fontSize_[16]};
-      }
-      .buttonWrapper {
-        display: flex;
-        justify-content: center;
-        gap: 0.5rem;
+    h3 {
+      margin-bottom: 1rem;
+      font-size: ${theme.font.subTitle};
+      font-weight: 800;
+      color: ${theme.colors.gray[50]};
+    }
+    p {
+      color: ${theme.colors.gray[50]};
+      white-space: pre-wrap;
+      margin-bottom: 1.5rem;
+      font-size: ${theme.font.body};
+    }
+    .buttonWrapper {
+      display: flex;
+      justify-content: center;
+      gap: 0.5rem;
 
-        .modal-btn {
-          max-width: 10rem;
-          width: 100%;
-          padding: 0.75rem;
-          font-size: 14px;
-          color: ${colors.gray[50]};
-          background-color: ${colors.gray[800]};
-          border-radius: 0.375rem;
-          transition: background-color 0.2s ease-in-out;
-          outline: none;
+      .modal-btn {
+        max-width: 10rem;
+        width: 100%;
+        padding: 0.75rem;
+        font-size: 14px;
+        color: ${theme.colors.gray[50]};
+        background-color: ${theme.colors.gray[800]};
+        border-radius: 0.375rem;
+        transition: background-color 0.2s ease-in-out;
+        outline: none;
 
-          &:focus{
-            ring:2px;
-            ring-offset: 2px;
-            ring-color: ${colors.gray[800]};
+        &:focus {
+          ring: 2px;
+          ring-offset: 2px;
+          ring-color: ${theme.colors.gray[800]};
+        }
+        &:hover {
+          background-color: ${theme.colors.gray[700]};
+        }
+
+        .pri {
+          &:focus {
+            ring-color: ${theme.colors.pri[800]};
           }
-          &:hover{
-            background-color: ${colors.gray[700]};
-          }
-
-          .pri {
-            &:focus{
-            ring-color: ${colors.pri[800]};
-            }
-            &:hover{
-              background-color: ${colors.gray[700]};
-            }
+          &:hover {
+            background-color: ${theme.colors.gray[700]};
           }
         }
       }
-
-      `;
-    }}
+    }
   `,
 
   CloseButton: styled.button`
@@ -143,10 +138,10 @@ const S = {
   `,
 
   Description: styled.p`
-    color: ${({ theme }) => theme.colors.gray[50]};
+    color: ${theme.colors.gray[50]};
     white-space: pre-wrap;
     margin-bottom: 1.5rem;
-    font-size: ${({ theme }) => theme.fontSize_[16]};
+    font-size: ${theme.font.body};
   `,
 
   ButtonWrapper: styled.div`
@@ -157,33 +152,23 @@ const S = {
 };
 
 export const ModalButton = styled.button<{ $isPrimary?: boolean }>`
-  ${({ theme, $isPrimary = false }) => {
-    const { colors, fontSize_ } = theme;
-    const bgColor = $isPrimary ? colors.pri[500] : colors.gray[800];
-    const hoverColor = $isPrimary ? colors.pri[400] : colors.gray[700];
-    const ringColor = $isPrimary ? colors.pri[800] : colors.gray[800];
-    const textColor = $isPrimary ? colors.White : colors.gray[50];
-
-    return `
-      max-width: 10rem;
-      padding: 0.75rem;
-      background-color: ${bgColor};
-      &:hover {
-        background-color: ${hoverColor};
-      }
-      color: ${textColor};
-      border-radius: 0.375rem;
-      width: 100%;
-      transition: background-color 0.2s ease-in-out;
-      outline: none;
-      &:focus {
-        ring: 2px;
-        ring-offset: 2px;
-        ring-color: ${ringColor};
-      }
-      font-size: ${fontSize_[14]};
-    `;
-  }}
+  max-width: 10rem;
+  padding: 0.75rem;
+  background-color: ${$isPrimary => ($isPrimary ? theme.colors.pri[500] : theme.colors.gray[800])};
+  &:hover {
+    background-color: ${$isPrimary => ($isPrimary ? theme.colors.pri[400] : theme.colors.gray[700])};
+  }
+  color: ${$isPrimary => ($isPrimary ? theme.colors.White : theme.colors.gray[50])};
+  border-radius: 0.375rem;
+  width: 100%;
+  transition: background-color 0.2s ease-in-out;
+  outline: none;
+  &:focus {
+    ring: 2px;
+    ring-offset: 2px;
+    ring-color: ${$isPrimary => ($isPrimary ? theme.colors.pri[800] : theme.colors.gray[800])};
+  }
+  font-size: ${theme.font.sub};
 `;
 
 export const Modal = memo(ModalComponent);

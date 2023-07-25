@@ -63,29 +63,29 @@ const fontSize = {
   smallestText: 12,
 };
 
-const fontSize_ = {
-  28: `1.75rem`,
-  24: '1.5rem',
-  18: '1.125rem',
-  16: '1rem',
-  14: '.875rem',
-  12: '.75remx',
+const font = {
+  main: '1.75rem', // 28
+  title: '1.5rem', // 24
+  subTitle: '1.125rem', // 18
+  body: '1rem', // 16
+  sub: '.875rem', // 14
+  sm: '.75rem', // 12
 };
 
 export type ColorsTypes = typeof colors;
 export type FontSizeTypes = typeof fontSize;
-export type FontSize_Types = typeof fontSize_;
+export type FontTypes = typeof font;
 
 export interface ThemeTypes {
   colors: ColorsTypes;
   fontSize: FontSizeTypes;
-  fontSize_: FontSize_Types;
+  font: FontTypes;
 }
 
 export const theme: DefaultTheme = {
   colors,
   fontSize,
-  fontSize_,
+  font,
 };
 
 export default theme;
