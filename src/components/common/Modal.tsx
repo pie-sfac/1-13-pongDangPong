@@ -76,7 +76,7 @@ const S = {
     top: 0;
     width: 100%;
     height: 100%;
-    background: rgba(0, 0, 0, 0.5);
+    background: ${({ theme }) => `rgba(${theme.colors.Dim}, 0.5)`};
     animation: ${props =>
       props.$isOpen
         ? css`
@@ -92,7 +92,7 @@ const S = {
   ModalContent: styled.div`
     position: relative;
     background: white;
-    border: 1px solid ${({ theme }) => theme.colors['Gray-600']};
+    border: 1px solid ${({ theme }) => theme.colors.gray[600]};
     max-height: 100%;
     width: 100%;
     max-width: 28rem;
@@ -109,21 +109,21 @@ const S = {
 
   Title: styled.p`
     ${({ theme }) => {
-      const { colors, fontSizeRem } = theme;
+      const { colors, fontSize_ } = theme;
       return `
         margin-bottom: 1rem;
-        font-size: ${fontSizeRem.subTitle};
+        font-size: ${fontSize_[18]};
         font-weight: 800;
-        color: ${colors['Gray-50']};
+        color: ${colors.gray[50]};
       `;
     }}
   `,
 
   Description: styled.p`
-    color: ${({ theme }) => theme.colors['Gray-50']};
+    color: ${({ theme }) => theme.colors.gray[50]};
     white-space: pre-wrap;
     margin-bottom: 1.5rem;
-    font-size: ${({ theme }) => theme.fontSizeRem.bodyText};
+    font-size: ${({ theme }) => theme.fontSize_[16]};
   `,
 
   ButtonWrapper: styled.div`
@@ -134,11 +134,11 @@ const S = {
 
   ModalButton: styled.button<{ $isPrimary: boolean }>`
     ${({ theme, $isPrimary }) => {
-      const { colors, fontSizeRem } = theme;
-      const bgColor = $isPrimary ? colors['Pri-500'] : colors['Gray-800'];
-      const hoverColor = $isPrimary ? colors['Pri-400'] : colors['Gray-700'];
-      const ringColor = $isPrimary ? colors['Pri-800'] : colors['Gray-800'];
-      const textColor = $isPrimary ? colors['White'] : colors['Gray-50'];
+      const { colors, fontSize_ } = theme;
+      const bgColor = $isPrimary ? colors.pri[500] : colors.gray[800];
+      const hoverColor = $isPrimary ? colors.pri[400] : colors.gray[700];
+      const ringColor = $isPrimary ? colors.pri[800] : colors.gray[800];
+      const textColor = $isPrimary ? colors.White : colors.gray[50];
 
       return `
       max-width: 10rem;
@@ -157,7 +157,7 @@ const S = {
         ring-offset: 2px;
         ring-color: ${ringColor};
       }
-      font-size: ${fontSizeRem.details};
+      font-size: ${fontSize_[14]};
     `;
     }}
   `,
