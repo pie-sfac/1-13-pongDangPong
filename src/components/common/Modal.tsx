@@ -3,9 +3,8 @@ import { Dispatch, FC, SetStateAction, memo, useCallback } from 'react';
 import { css, keyframes, styled } from 'styled-components';
 
 interface ModalProps {
-  modalValues: ModalValueState;
+  children: React.ReactNode;
   setIsOpen: Dispatch<SetStateAction<boolean>>;
-  isOpen: boolean;
 }
 
 export interface ModalValueState {
@@ -14,11 +13,7 @@ export interface ModalValueState {
   button: { id: number; title: string; color: boolean }[];
 }
 
-const ModalComponent: FC<ModalProps> = ({ modalValues, setIsOpen, isOpen }: ModalProps) => {
-  if (!isOpen) {
-    return null;
-  }
-
+const ModalComponent: FC<ModalProps> = ({ children, setIsOpen }) => {
   const handleClose = useCallback(
     (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
       if (event.target === event.currentTarget) setIsOpen(false);
@@ -28,20 +23,12 @@ const ModalComponent: FC<ModalProps> = ({ modalValues, setIsOpen, isOpen }: Moda
 
   return (
     <>
-      <S.ModalBackground $isOpen={isOpen} onClick={handleClose}>
+      <S.ModalBackground onClick={handleClose}>
         <S.ModalContent onClick={e => e.stopPropagation()}>
           <S.CloseButton onClick={() => setIsOpen(false)}>
             <img alt="close" src={x} />
           </S.CloseButton>
-          <S.Title>{modalValues.title}</S.Title>
-          <S.Description>{modalValues.desc}</S.Description>
-          <S.ButtonWrapper>
-            {modalValues.button.map(v => (
-              <S.ModalButton key={v.id} $isPrimary={v.color} onClick={() => setIsOpen(false)}>
-                {v.title}
-              </S.ModalButton>
-            ))}
-          </S.ButtonWrapper>
+          <S.ModalInnerContent>{children}</S.ModalInnerContent>
         </S.ModalContent>
       </S.ModalBackground>
     </>
@@ -67,7 +54,7 @@ const fadeOut = keyframes`
 `;
 
 const S = {
-  ModalBackground: styled.div<{ $isOpen: boolean }>`
+  ModalBackground: styled.div`
     display: flex;
     align-items: center;
     justify-content: center;
@@ -77,16 +64,8 @@ const S = {
     width: 100%;
     height: 100%;
     background: ${({ theme }) => `rgba(${theme.colors.Dim}, 0.5)`};
-    animation: ${props =>
-      props.$isOpen
-        ? css`
-            ${fadeIn} 0.5s
-          `
-        : css`
-            ${fadeOut} 0.5s
-          `};
+    animation: ${fadeIn} 0.5s;
     transition: opacity 0.5s;
-    visibility: ${props => (props.$isOpen ? 'visible' : 'hidden')};
   `,
 
   ModalContent: styled.div`
@@ -101,22 +80,66 @@ const S = {
     padding: 3rem 2.5rem 2.5rem 2.5rem;
   `,
 
+  ModalInnerContent: styled.div`
+    ${({ theme }) => {
+      const { colors, fontSize_ } = theme;
+      return `
+      h3 {
+        margin-bottom: 1rem;
+        font-size: ${fontSize_[18]};
+        font-weight: 800;
+        color : ${colors.gray[50]}
+      }
+      p {
+        color: ${colors.gray[50]};
+        white-space: pre-wrap;
+        margin-bottom: 1.5rem;
+        font-size: ${fontSize_[16]};
+      }
+      .buttonWrapper {
+        display: flex;
+        justify-content: center;
+        gap: 0.5rem;
+
+        .modal-btn {
+          max-width: 10rem;
+          width: 100%;
+          padding: 0.75rem;
+          font-size: 14px;
+          color: ${colors.gray[50]};
+          background-color: ${colors.gray[800]};
+          border-radius: 0.375rem;
+          transition: background-color 0.2s ease-in-out;
+          outline: none;
+
+          &:focus{
+            ring:2px;
+            ring-offset: 2px;
+            ring-color: ${colors.gray[800]};
+          }
+          &:hover{
+            background-color: ${colors.gray[700]};
+          }
+
+          .pri {
+            &:focus{
+            ring-color: ${colors.pri[800]};
+            }
+            &:hover{
+              background-color: ${colors.gray[700]};
+            }
+          }
+        }
+      }
+
+      `;
+    }}
+  `,
+
   CloseButton: styled.button`
     position: absolute;
     top: 1.5rem;
     right: 1.5rem;
-  `,
-
-  Title: styled.p`
-    ${({ theme }) => {
-      const { colors, fontSize_ } = theme;
-      return `
-        margin-bottom: 1rem;
-        font-size: ${fontSize_[18]};
-        font-weight: 800;
-        color: ${colors.gray[50]};
-      `;
-    }}
   `,
 
   Description: styled.p`
@@ -131,16 +154,17 @@ const S = {
     justify-content: center;
     gap: 0.5rem;
   `,
+};
 
-  ModalButton: styled.button<{ $isPrimary: boolean }>`
-    ${({ theme, $isPrimary }) => {
-      const { colors, fontSize_ } = theme;
-      const bgColor = $isPrimary ? colors.pri[500] : colors.gray[800];
-      const hoverColor = $isPrimary ? colors.pri[400] : colors.gray[700];
-      const ringColor = $isPrimary ? colors.pri[800] : colors.gray[800];
-      const textColor = $isPrimary ? colors.White : colors.gray[50];
+export const ModalButton = styled.button<{ $isPrimary?: boolean }>`
+  ${({ theme, $isPrimary = false }) => {
+    const { colors, fontSize_ } = theme;
+    const bgColor = $isPrimary ? colors.pri[500] : colors.gray[800];
+    const hoverColor = $isPrimary ? colors.pri[400] : colors.gray[700];
+    const ringColor = $isPrimary ? colors.pri[800] : colors.gray[800];
+    const textColor = $isPrimary ? colors.White : colors.gray[50];
 
-      return `
+    return `
       max-width: 10rem;
       padding: 0.75rem;
       background-color: ${bgColor};
@@ -159,8 +183,7 @@ const S = {
       }
       font-size: ${fontSize_[14]};
     `;
-    }}
-  `,
-};
+  }}
+`;
 
 export const Modal = memo(ModalComponent);
