@@ -4,7 +4,7 @@
   
 # 💧 Team Pongdangpong
 
-![Logo](https://github.com/hjkimw/pongdangpong-readme/assets/108564335/160b407b-944d-401f-8a51-19eabb60a05d)  수업 관리 시스템 제작(pc)
+![Logo](https://github.com/hjkimw/pongdangpong-readme/assets/108564335/160b407b-944d-401f-8a51-19eabb60a05d)
 <br/>
 
 `직원/회원관리`, `수강권 관리`, `수업/상담 예약 일정관리` 등 <br/>
