@@ -1,7 +1,5 @@
 # 💧 Team Pongdangpong
 
-<br/>
-
 - 👋🏻 실제 서비스 중인 통증 관리 전문가들을 위한 올인원 고객 관리 전문 <a href = "https://play.google.com/store/apps/details?id=kr.piehealthcare.point.therapist&hl=ko&gl=KR">**포인티**( <img src="https://github.com/pie-sfac/1-13-pongDangPong/assets/108564335/ba13fdbd-3950-4ecd-87b7-eb9eb0b7187e" height='20px'> )</a> 앱의<br> **직원 / 회원관리**, **수강권 관리**, **수업 / 상담 예약 일정관리** 등의 전반적인 시스템을 **PC용 웹 서비스** 형태로 개발한 프로젝트입니다.
 - 🔗 [~~배포 URL~~](https://6suk.github.io/pongdangpong/) - `준비 중입니다!`
 - 📚 [**퐁당퐁 DOCS**](https://6suk.notion.site/65771394f5874be4a166db71e7e1e666?v=fc3e39784fd44538b46e9fc6ac98f2a5&pvs=4)
